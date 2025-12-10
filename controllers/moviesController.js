@@ -1,4 +1,3 @@
-const { error } = require('console')
 const connection = require('../database/connection')
 
 const index = (req, res) => {
@@ -29,7 +28,7 @@ const show = (req, res) => {
             if (err) {
                 return res.status(500).join({ error: true, message: err.message })
             }
-            movies.reviews = reviews
+            movie.reviews = reviews
             res.json(movie)
         })
     })

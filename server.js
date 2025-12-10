@@ -1,6 +1,11 @@
+const { error } = require('console')
 const express = require('express')
+
 const app = express()
 const PORT = 3000
+
+const moviesRouter = require("./routers/moviesRouter");
+
 
 
 app.listen(PORT, () =>
@@ -12,4 +17,15 @@ app.use(express.json())
 
 app.get('/', (req, res) => {
     res.send('My movies API server')
+})
+
+app.use("/movies", moviesRouter);
+
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    return res.status(500).json({ error: err.message })
+})
+
+app.use((req, res, next) => {
+    res.status(404).json({ message: 'Route not Found' })
 })
