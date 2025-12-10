@@ -21,6 +21,8 @@ app.get('/', (req, res) => {
 
 app.use("/movies", moviesRouter);
 
+app.use('/movies_cover', express.static('movies_cover'))
+
 app.use((err, req, res, next) => {
     console.error(err.stack)
     return res.status(500).json({ error: err.message })
