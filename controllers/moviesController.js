@@ -32,9 +32,43 @@ const show = (req, res) => {
             res.json(movie)
         })
     })
+
 }
+/*
+const store = (req, res) => {
+    console.log(req.file)
+    console.log(req.body);
+    const { movie_id, name, text, vote } = req.body
+    const image = req.file ? req.file.filename : null
+    const imagePath = `${process.env.BACKEND_URL}/uploads/${image}`
+    console.log(movie_id, name, text, vote, imagePath);
+
+    const sql = "INSERT INTO films (movie_id, name, text, vote,image ) VALUES (?,?,?,?,?)"
+    connection.query(sql, [movie_id, name, text, vote, imagePath], (err, results) => {
+        if (err) return res.status(500).json({ error: true, message: err.message })
+        res.status(201).json({ message: "review added", movieID: results.insertId })
+    })
+
+    res.send('ok')
+}
+*/
+
+const storeReview = (req, res) => {
+    const movie_id = Number(req.params.id)
+    const { name, text, vote } = req.body
+
+    const sql = 'INSERT INTO reviews (movie_id, name, text, vote) VALUES (?, ?, ?, ?)'
+    console.log(movie_id, name, text, vote)
+    connection.query(sql, [movie_id, name, text, vote], (err, results) => {
+        if (err) return res.status(500).json({ error: true, message: err.message })
+        res.status(201).json({ message: "review created", textID: results.insertId })
+    })
+}
+
 
 module.exports = {
     index,
-    show
+    show,
+    // store,
+    storeReview
 }
