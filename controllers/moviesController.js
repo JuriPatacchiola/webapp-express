@@ -61,7 +61,12 @@ const storeReview = (req, res) => {
     console.log(movie_id, name, text, vote)
     connection.query(sql, [movie_id, name, text, vote], (err, results) => {
         if (err) return res.status(500).json({ error: true, message: err.message })
-        res.status(201).json({ message: "review created", textID: results.insertId })
+        res.status(201).json({
+            message: "review created", id: results.insertId,
+            name,
+            text,
+            vote
+        })
     })
 }
 
